@@ -47,7 +47,13 @@ def show_stocks():
             print("====================")
 
 def delete_stock():
-    stock_number = int(input("Въведи номер на акцията: "))
+    while True:
+        try:
+            stock_number = int(input("Въведи номер на акцията: "))
+            break
+        except:
+            print("Моля, въведете валиден номер!")
+
     index = stock_number  - 1
     
     if index < 0 or index >= len(stocks):
@@ -59,8 +65,20 @@ def delete_stock():
 
 def add_stock():
     tiker = input("Въведи тикер: ").strip().upper()
-    cena = float(input("Въведи цена на тикера: "))
-    broi = int(input("Въведи броят им: "))
+
+    while True:
+        try:
+            cena = float(input("Въведи цена на тикера: "))
+            break 
+        except:
+            print("Моля, въведете цена!")
+
+    while True:
+        try:
+            broi = int(input("Въведи броят им: "))
+            break
+        except:
+            print("Моля, въведете брой!")
 
     new_stock = {
         "tiker": tiker,
@@ -91,15 +109,33 @@ def edit_stock():
             print("1. цена")
             print("2. брой")
 
-            edit_choice = int(input("Какво искаш да редактираш?: "))
+            while True:
+                try:
+                    edit_choice = int(input("Какво искаш да редактираш?: "))
+                    break
+                except:
+                    print("Моля, въведете валиден избор!")
 
             if edit_choice == 1:
-                edit_cena = float(input("Въведи новата цена: "))
+                while True:
+                    try:
+                        edit_cena = float(input("Въведи новата цена: "))
+                        break 
+                    except:
+                        print("Моля, въведете валидна цена!")
+                    
                 stock["cena"] = edit_cena 
                 print("Акцията беше редактирана успешно!")
 
-            elif edit_choice == 2: 
-                edit_broi = int(input("Въведи новият брои: "))
+            elif edit_choice == 2:
+
+                while True:
+                    try:
+                        edit_broi = int(input("Въведи новият брои: "))
+                        break
+                    except:
+                        print("Моля, въведете валиден брой!")
+
                 stock["broi"] = edit_broi
                 print("Акцията беше редактирана успешно!")
             else:
@@ -165,7 +201,12 @@ while choice != 10:
     print()
     print("10. Изход")
 
-    choice = int(input("Избери опция: "))
+    while True:
+        try:
+            choice = int(input("Избери опция: "))
+            break
+        except:
+            print("Моля, въведете валиден избор!")
 
     if choice == 1:
         add_stock()
