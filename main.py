@@ -112,7 +112,10 @@ def edit_stock():
             while True:
                 try:
                     edit_choice = int(input("Какво искаш да редактираш?: "))
-                    break
+                    if edit_choice == 1 or edit_choice == 2:
+                        break 
+                    else:
+                        print("Невалиден избор!")
                 except:
                     print("Моля, въведете валиден избор!")
 
@@ -138,9 +141,6 @@ def edit_stock():
 
                 stock["broi"] = edit_broi
                 print("Акцията беше редактирана успешно!")
-            else:
-                print("Невалиден избор!")
-            break
 
 
 
