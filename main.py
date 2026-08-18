@@ -43,6 +43,15 @@ def portfolio_profit():
 
     return total_earnings 
 
+def portfolio_summary():
+    total = portfolio_value()
+    profit = portfolio_profit()
+    positions = len(stocks)
+
+    return total, profit, positions
+
+
+
 
 
 
@@ -211,7 +220,7 @@ def search_stock():
         print("Акцията не беше намерена.")
 
 
-while choice != 11:
+while choice != 10:
     print("1. Добави акция")
     print()
     print("2. Покажи акции")
@@ -220,19 +229,17 @@ while choice != 11:
     print() 
     print("4. Редактирай акция")
     print() 
-    print("5. Обща стойност")
+    print("5. Преглед на портфолиото")
     print()
-    print("6. Печалба/Загуба")
+    print("6. Търси акция")
     print()
-    print("7. Търси акция")
+    print("7. Запази портфолиото")
     print()
-    print("8. Запази портфолиото")
-    print()
-    print("9. Зареди портфолиото")
+    print("8. Зареди портфолиото")
     print() 
-    print("10. Статус на портфолиото")
+    print("9. Статус на портфолиото")
     print()
-    print("11. Изход")
+    print("10. Изход")
 
     while True:
         try:
@@ -254,28 +261,26 @@ while choice != 11:
         edit_stock() 
 
     elif choice == 5:
-       total =  portfolio_value()
-       print("Обща стойност на портфолиото:", total)
-
-    elif choice == 6:
-        total_earnings = portfolio_profit()
-        print("Обща печалба/загуба:", total_earnings)
+        total, profit, positions = portfolio_summary() 
+        print("Обща стойност на портфолиото:", total)
+        print("Обща печалба/загуба:", profit)
+        print("Брой позиции:", positions)
         
-    elif choice == 7:
+    elif choice == 6:
         search_stock() 
         
-    elif choice == 8:
+    elif choice == 7:
         save_portfolio()
 
-    elif choice == 9:
+    elif choice == 8:
         load_portfolio()
 
-    elif choice == 10:
+    elif choice == 9:
         total, status = portfolio_status() 
         print("Стойност:", total) 
         print("Статус:", status)
 
-    elif choice == 11:
+    elif choice == 10:
         print("Изход")
         break
 
