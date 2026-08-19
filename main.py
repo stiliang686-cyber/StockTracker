@@ -37,18 +37,26 @@ def portfolio_value():
 
 def portfolio_profit():
     total_earnings = 0 
+    total_invested = 0 
+
     for stock in stocks:
         profit_per_share = stock["cena"] - stock["buy_price"]
         total_earnings += profit_per_share * stock["broi"]
+        total_invested += stock["buy_price"] * stock["broi"]
 
-    return total_earnings 
+    if total_invested == 0: 
+        profit_percent = 0
+    else:
+        profit_percent = (total_earnings / total_invested) * 100
+
+    return total_earnings, profit_percent
 
 def portfolio_summary():
     total = portfolio_value()
-    profit = portfolio_profit()
+    profit, profit_percent = portfolio_profit()
     positions = len(stocks)
 
-    return total, profit, positions
+    return total, profit, profit_percent, positions
 
 
 
@@ -96,25 +104,25 @@ def add_stock():
 
     while True:
         try:
-            broi = int(input("Въведи броят им: "))
-            break
-        except:
-            print("Моля, въведете брой!")
-
-    while True:
-        try:
             buy_price = float(input("Въведи цена на покупка: "))
             break
         except:
             print("Моля, въведете валидна покупна цена!")
+
+    while True:
+            try:
+                broi = int(input("Въведи броят им: "))
+                break
+            except:
+                print("Моля, въведете брой!")
 
     profit_per_share = cena - buy_price 
 
     new_stock = {
         "tiker": tiker,
         "cena": cena,
+        "buy_price": buy_price,
         "broi": broi,
-        "buy_price": buy_price
     }
 
     found = False 
@@ -261,9 +269,10 @@ while choice != 10:
         edit_stock() 
 
     elif choice == 5:
-        total, profit, positions = portfolio_summary() 
+        total, profit, profit_percent, positions = portfolio_summary() 
         print("Обща стойност на портфолиото:", total)
-        print("Обща печалба/загуба:", profit)
+        print("Обща Печалба/загуба %:", profit)
+        print(f"Процентна печалба: {profit_percent:.2f}%")
         print("Брой позиции:", positions)
         
     elif choice == 6:
