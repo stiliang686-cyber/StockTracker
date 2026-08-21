@@ -87,14 +87,21 @@ def delete_stock():
     
     if index < 0 or index >= len(stocks):
         print("Невалиден номер!")
+        return 
     else:
         stock = stocks[index]
+    while True:
         confirmation = input("Сигурни ли си? (да/не): ").strip().lower()
-    if confirmation == "да":
-        stocks.remove(stock)
-        print("Акцията беше изтрита!")
-    else:
-        print("Изтриването беше отменено.")
+        if confirmation == "да" or confirmation == "yes": 
+            stocks.remove(stock)
+            print("Акцията беше изтрита!")
+            break 
+        elif confirmation == "не" or confirmation == "no":
+            print("Изтриването беше отменено!")
+            break
+        else: 
+            print("Моля, въведете 'да' 'не' 'yes' или 'no' .")
+
 
 def add_stock():
     tiker = input("Въведи тикер: ").strip().upper()
