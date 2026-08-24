@@ -58,7 +58,25 @@ def portfolio_summary():
 
     return total, profit, profit_percent, positions
 
+def buy_stock():
+    tiker = input("Въведи тикер: ").strip().upper()
+    found = False 
+    for stock in stocks:
+        if stock["tiker"] == tiker:
+            found = True 
 
+            while True: 
+                try:
+                    buy_amount = int(input("Колко акции искаш да купиш?: "))
+                    break 
+                except:
+                    print("Моля, въведете валидно количество!")
+
+            stock["broi"] += buy_amount
+            print("Акциите бяха добавени успешно!")
+            
+    if not found:
+        print("Акцията не беше намерена!")
 
 
 
@@ -239,26 +257,28 @@ def search_stock():
         print("Акцията не беше намерена.")
 
 
-while choice != 10:
+while choice != 11:
     print("1. Добави акция")
     print()
-    print("2. Покажи акции")
+    print("2. Купи акции")
     print()
-    print("3. Премахване на акция")
+    print("3. Покажи акции")
+    print()
+    print("4. Премахване на акция")
     print() 
-    print("4. Редактирай акция")
+    print("5. Редактирай акция")
     print() 
-    print("5. Преглед на портфолиото")
+    print("6. Преглед на портфолиото")
     print()
-    print("6. Търси акция")
+    print("7. Търси акция")
     print()
-    print("7. Запази портфолиото")
+    print("8. Запази портфолиото")
     print()
-    print("8. Зареди портфолиото")
+    print("9. Зареди портфолиото")
     print() 
-    print("9. Статус на портфолиото")
+    print("10. Статус на портфолиото")
     print()
-    print("10. Изход")
+    print("11. Изход")
 
     while True:
         try:
@@ -271,36 +291,39 @@ while choice != 10:
         add_stock()
 
     elif choice == 2:
-        show_stocks() 
+        buy_stock()
 
     elif choice == 3:
-        delete_stock()
+        show_stocks() 
 
     elif choice == 4:
-        edit_stock() 
+        delete_stock()
 
     elif choice == 5:
+        edit_stock() 
+
+    elif choice == 6:
         total, profit, profit_percent, positions = portfolio_summary() 
         print("Обща стойност на портфолиото:", total)
         print("Обща Печалба/загуба %:", profit)
         print(f"Процентна печалба: {profit_percent:.2f}%")
         print("Брой позиции:", positions)
         
-    elif choice == 6:
+    elif choice == 7:
         search_stock() 
         
-    elif choice == 7:
+    elif choice == 8:
         save_portfolio()
 
-    elif choice == 8:
+    elif choice == 9:
         load_portfolio()
 
-    elif choice == 9:
+    elif choice == 10:
         total, status = portfolio_status() 
         print("Стойност:", total) 
         print("Статус:", status)
 
-    elif choice == 10:
+    elif choice == 11:
         print("Изход")
         break
 
