@@ -68,16 +68,20 @@ def sell_stock():
             while True: 
                 try:
                     sell_amount = int(input("Колко акции искаш да продадеш?: "))
+                    if sell_amount <= 0:
+                        print("Невалидно количество")
+                        continue 
+
+                    elif sell_amount > stock["broi"]:
+                        print("Нямаш достатъчно акции! Въведеното количество е по-голямо от наличното.")
+
+                    else:  
+                        stock["broi"] -= sell_amount 
+                        print("Акциите бяха продадени успешно!")
+                        break 
                 except:
                     print("Моля, въведете валидно количество!")
-
-                if sell_amount > stock["broi"]:
-                    print("Нямаш достатъчно акции! Въведеното количество е по-голямо от наличното.")
                 
-                else:
-                    stock["broi"] -= sell_amount 
-                    print("Акциите бяха продадени успешно!")
-                    break 
 
     if not found:
         print( "Акцията не беше намерена!")
@@ -94,12 +98,15 @@ def buy_stock():
             while True: 
                 try:
                     buy_amount = int(input("Колко акции искаш да купиш?: "))
-                    break 
+                    if buy_amount <= 0: 
+                        print("Моля, въведете валидно количество!")
+                        continue  
                 except:
                     print("Моля, въведете валидно количество!")
 
-            stock["broi"] += buy_amount
-            print("Акциите бяха добавени успешно!")
+                stock["broi"] += buy_amount
+                print("Акциите бяха добавени успешно!")
+                break 
             
     if not found:
         print("Акцията не беше намерена!")
@@ -167,11 +174,12 @@ def add_stock():
     while True:
             try:
                 broi = int(input("Въведи броят им: "))
+                if broi <= 0:
+                    print("Невалидно количество!")
+                    continue 
                 break
             except:
                 print("Моля, въведете брой!")
-
-    profit_per_share = cena - buy_price 
 
     new_stock = {
         "tiker": tiker,
@@ -200,9 +208,9 @@ def edit_stock():
         if stock["tiker"] == edit_tiker:
             found = True 
 
-            print("1. цена")
-            print("3. цена на покупка")
-            print("2. брой")
+            print("1. Цена")
+            print("2. Цена на покупка")
+            print("3. Брой")
             
             while True:
                 try:
