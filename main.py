@@ -52,11 +52,27 @@ def portfolio_profit():
     return total_earnings, profit_percent
 
 def portfolio_summary():
+    highest_profit = 0
+    best_stock = None 
+    highest_loss = None 
+    worst_stock = None 
+    for stock in stocks: 
+        stock_profit = (stock["cena"] - stock["buy_price"]) * stock["broi"]
+
+        if stock_profit > highest_profit:
+            highest_profit = stock_profit
+            best_stock = stock 
+
+        if highest_loss is None or stock_profit < highest_loss: 
+            highest_loss = stock_profit
+            worst_stock = stock 
+
+
     total = portfolio_value()
     profit, profit_percent = portfolio_profit()
     positions = len(stocks)
 
-    return total, profit, profit_percent, positions
+    return total, profit, profit_percent, positions, best_stock, worst_stock 
 
 def sell_stock(): 
     tiker = input("Въведи тикер: ").strip().upper() 
@@ -344,12 +360,17 @@ while choice != 12:
         edit_stock() 
 
     elif choice == 7:
-        total, profit, profit_percent, positions = portfolio_summary() 
+        total, profit, profit_percent, positions, best_stock, worst_stock = portfolio_summary() 
         print("Обща стойност на портфолиото:", total)
         print("Обща Печалба/загуба %:", profit)
         print(f"Процентна печалба: {profit_percent:.2f}%")
         print("Брой позиции:", positions)
-        
+        if best_stock == None:
+            print("Няма налични акции за преглед.")
+        else:
+            print("най-печелившата акция:", best_stock["tiker"])
+            print("най-губещата акция:", worst_stock["tiker"])
+
     elif choice == 8:
         search_stock() 
         
