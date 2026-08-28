@@ -52,21 +52,24 @@ def portfolio_profit():
     return total_earnings, profit_percent
 
 def portfolio_summary():
-    highest_profit = 0
+    highest_profit = None 
     best_stock = None 
     highest_loss = None 
     worst_stock = None 
     for stock in stocks: 
         stock_profit = (stock["cena"] - stock["buy_price"]) * stock["broi"]
 
-        if stock_profit > highest_profit:
+        if highest_profit is None or stock_profit > highest_profit:
             highest_profit = stock_profit
             best_stock = stock 
 
-        if highest_loss is None or stock_profit < highest_loss: 
+        if stock_profit < 0 and (highest_loss is None or stock_profit < highest_loss):
             highest_loss = stock_profit
-            worst_stock = stock 
+            worst_stock = stock
 
+        if highest_profit is None or stock_profit > highest_profit:
+            highest_profit = stock_profit
+            best_stock = stock
 
     total = portfolio_value()
     profit, profit_percent = portfolio_profit()
@@ -369,7 +372,11 @@ while choice != 12:
             print("Няма налични акции за преглед.")
         else:
             print("най-печелившата акция:", best_stock["tiker"])
-            print("най-губещата акция:", worst_stock["tiker"])
+            if worst_stock == None:
+                print("Няма губещи акции.")
+            else: 
+                print("най-губещата акция:", worst_stock["tiker"])
+
 
     elif choice == 8:
         search_stock() 
