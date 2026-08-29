@@ -67,10 +67,6 @@ def portfolio_summary():
             highest_loss = stock_profit
             worst_stock = stock
 
-        if highest_profit is None or stock_profit > highest_profit:
-            highest_profit = stock_profit
-            best_stock = stock
-
     total = portfolio_value()
     profit, profit_percent = portfolio_profit()
     positions = len(stocks)
@@ -93,11 +89,16 @@ def sell_stock():
 
                     elif sell_amount > stock["broi"]:
                         print("Нямаш достатъчно акции! Въведеното количество е по-голямо от наличното.")
-
-                    else:  
+                        continue
+                    
+                    else:
                         stock["broi"] -= sell_amount 
-                        print("Акциите бяха продадени успешно!")
-                        break 
+
+                        if stock["broi"] == 0:
+                            stocks.remove(stock)
+
+                    print("Акциите бяха продадени успешно!")
+                    break 
                 except:
                     print("Моля, въведете валидно количество!")
                 
@@ -122,6 +123,7 @@ def buy_stock():
                         continue  
                 except:
                     print("Моля, въведете валидно количество!")
+                    continue 
 
                 stock["broi"] += buy_amount
                 print("Акциите бяха добавени успешно!")
@@ -179,6 +181,9 @@ def add_stock():
     while True:
         try:
             cena = float(input("Въведи цена на тикера: "))
+            if cena <= 0: 
+                print("Невалидна цена!")
+                continue 
             break 
         except:
             print("Моля, въведете цена!")
@@ -186,6 +191,9 @@ def add_stock():
     while True:
         try:
             buy_price = float(input("Въведи цена на покупка: "))
+            if buy_price <= 0: 
+                print("Невалидна покупна цена! ")
+                continue 
             break
         except:
             print("Моля, въведете валидна покупна цена!")
@@ -245,9 +253,13 @@ def edit_stock():
                 while True:
                     try:
                         edit_cena = float(input("Въведи новата цена: "))
+                        if edit_cena <= 0:
+                            print("евалидна цена!")
+                            continue 
                         break 
                     except:
                         print("Моля, въведете валидна цена!")
+                        continue
                     
                 stock["cena"] = edit_cena 
                 print("Акцията беше редактирана успешно!")
@@ -256,9 +268,14 @@ def edit_stock():
                             while True:
                                 try:
                                     edit_buy_price = float(input("Въведи новата цена на покупката: "))
+                                    if edit_buy_price <= 0:
+                                        print("невалидна покупна цена!")
+                                        continue 
                                     break
                                 except:
                                     print("Моля, въведете валидна цена на покупката!")
+                                    continue
+
                             stock["buy_price"] = edit_buy_price
                             print("Акцията беше редактирана успешно!")
             
@@ -268,6 +285,9 @@ def edit_stock():
                 while True:
                     try:
                         edit_broi = int(input("Въведи новият брои: "))
+                        if edit_broi <= 0:
+                            print("Невалидно количество")
+                            continue
                         break
                     except:
                         print("Моля, въведете валиден брой!")
