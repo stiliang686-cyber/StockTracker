@@ -123,11 +123,26 @@ def buy_stock():
                         continue  
                 except:
                     print("Моля, въведете валидно количество!")
-                    continue 
-
-                stock["broi"] += buy_amount
-                print("Акциите бяха добавени успешно!")
+                    continue
                 break 
+
+            while True:
+                try:
+                    buy_price = float(input("На каква цена купуваш акцията?: "))
+                    if buy_price <= 0:
+                        print("Моля, въведете валидна цена!")
+                        continue 
+                except:
+                    print("Моля, въведете валидна цена! ")
+                    continue 
+                break
+
+            new_buy_price = ((stock["buy_price"] * stock["broi"]) + (buy_price * buy_amount)) / (stock["broi"] + buy_amount)
+            stock["buy_price"] = new_buy_price
+
+            stock["broi"] += buy_amount
+            print("Акциите бяха добавени успешно!")
+            break 
             
     if not found:
         print("Акцията не беше намерена!")
